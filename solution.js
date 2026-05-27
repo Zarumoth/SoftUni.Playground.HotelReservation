@@ -1,3 +1,24 @@
+// Provide a local fallback for changeContent if not defined elsewhere
+function changeContent(className) {
+    document.querySelectorAll('.custom-form').forEach(div => div.classList.add('hidden'));
+    const el = document.querySelector(`.${className}`);
+    if (el) el.classList.remove('hidden');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const backBtn = document.querySelector('#confirm-back-btn');
+    if (backBtn) backBtn.addEventListener('click', (e) => getBackToPersonalData(e));
+
+    const confirmBtn = document.querySelector('#confirm-reservation');
+    if (confirmBtn) confirmBtn.addEventListener('click', (e) => showThanksPage(e));
+
+    // Show confirm-reservation view for testing
+    changeContent('confirm-reservation-content');
+});
+
+function getBackToPersonalData(e) {
+    e.preventDefault();
+    changeContent('guest-details-form-content');
 let reservation =
 {
     startDate: null,
@@ -80,8 +101,9 @@ function fillConfirmReservationData(customReservation) {
     document.querySelector('.confirm-reservation #guest-data-out').textContent = `Date-out: ${customReservation.endDate}`;
 }
 
-function cleanData(e) {
-    changeContent('search-form-content');
+function showThanksPage(e) {
+    e.preventDefault();
+    changeContent('thank-you-content');
 }
 
 document.querySelector('#search-back-btn').addEventListener('click', (e) => fillSearchForm(e));
